@@ -4,6 +4,7 @@
 - Tsoi Ho Nam 14271070
 - Yu Shi Chen 14120069
 - Zhuang Zi Sheng 14050653
+
 ---
 
 ## Task 1: OOP-Based Library Management System
@@ -18,17 +19,20 @@
 ### OOP Concepts Used
 - Encapsulation (private attributes + getters)
 - Inheritance (Student / Staff inherit from User)
-- Polymorphism
 - Class & Object
 - Constructor (__init__)
 - Modular programming (3 separate files)
+- clear code structure
+
+---
 
 ##Task 2: Self-Study – Heap & Heap Sort
 ### Data Structure: Heap
 - Complete binary tree
 - Max-heap: parent ≥ children
 - Applications: priority queue, scheduling, sorting
+
 ### Algorithm: Heap Sort
 - Time Complexity: O(n log n)
 - In-place sorting
-- Stable: No
+- No extra space needed
