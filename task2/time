@@ -1,0 +1,96 @@
+import time
+import random  # Used to generate random arrays
+
+
+# Importing these two modules makes it easier to reflect the time complexity of different situations
+# (only showing the speed)
+
+# Encapsulated as the CocktailShakerSort class
+class CocktailShakerSort:
+    # Core sorting method
+    def cocktail_shaker_sort(self, array):
+        arr = array.copy()  # Avoid modifying the original array
+        swapped = True  # It is convenient to change the direction of pass
+        begin = 0
+        end = len(arr) - 1
+        # List sorting starts from 0
+        while swapped:
+            swapped = False
+            # Left -> Right pass: move largest element to end
+            for i in range(begin, end):
+                if arr[i] > arr[i + 1]:
+                    arr[i], arr[i + 1] = arr[i + 1], arr[i]
+                    # Swap positions
+                    swapped = True
+            if not swapped:  # Exit the loop when no position change is needed.
+                break
+            end -= 1  # The one on the right is already the largest.
+            swapped = False
+            # Right -> Left pass: move smallest element to begin
+            for i in range(end - 1, begin - 1, -1):
+                if arr[i] > arr[i + 1]:
+                    arr[i], arr[i + 1] = arr[i + 1], arr[i]
+                    swapped = True
+            begin += 1  # The one on the left is already the smallest
+        return arr
+
+    # Time testing method
+    def test_sort_time(self, sort_func, test_array, array_type):
+        begin_time = time.perf_counter()
+        # Record the begin_time(highprecision)
+        sort_func(test_array)
+        # Perform sorting
+        end_time = time.perf_counter()
+        # Record the end time(highprecision)
+        elapsed_time = end_time - begin_time
+        # Calculation time consumption (retain 6 decimal places for higher precision)
+        array_len = len(test_array)
+        print(f"array_len:{array_len}")
+        print(f"array_type:{array_type}")
+        print(f"Sorting takes time:{elapsed_time:.6f} seconds")
+        print("-----------------------------------------------------------")
+        # Print the result
+        return elapsed_time
+
+    def run(self):
+        try:
+            user_input = input("Enter a array (use English comma ','): ")
+            # Manually input the array for testing
+            clean_input = user_input.replace(' ', '').replace('，', ',')
+            # Prevent errors that occur during input
+            test_array = list(map(int, clean_input.split(',')))
+            array_type = "Self-selected_array"
+            print(f"Sorted Result: {self.cocktail_shaker_sort(test_array)}")
+            self.test_sort_time(self.cocktail_shaker_sort, test_array, array_type)
+        except ValueError:
+            print("Error: Please enter a valid integer array (e.g., 3,2,5 or 3, 2, 5)")
+
+        try:
+            Aut = int(input("Enter 200 to generate a group of array to test (enter other number to stop running):"))
+            if Aut == 200:
+
+                # Automatically generate different types of arrays to test the time complexity
+                test_lengths = [100, 500, 1000, 2000, 5000]
+                #  Test array length (can be adjusted as needed; the longer the length,
+                # the more obvious the time difference)
+                for length in test_lengths:
+                    random_array = [random.randint(0, 10000) for _ in range(length)]
+                    # Generate a random array (average case O(n**2))
+                    sorted_array = list(range(length))
+                    # Generate a sorted array (best-case O(n))
+                    reverse_array = list(range(length, 0, -1))
+                    # Generate a reverse array (in the worst case, O(n**2))
+                    self.test_sort_time(self.cocktail_shaker_sort, random_array, "Random Array")
+                    self.test_sort_time(self.cocktail_shaker_sort, sorted_array, "Sorted Array")
+                    self.test_sort_time(self.cocktail_shaker_sort, reverse_array, "Reverse Array")
+            else:
+                print("Stop running")
+        except ValueError:
+            print("Error: Please enter a valid number")
+
+
+# Program entry
+if __name__ == "__main__":
+    # Create a class instance and execute it
+    sorter = CocktailShakerSort()
+    sorter.run()
